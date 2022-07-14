@@ -1,7 +1,7 @@
 package com.deploy.playtogether;
 
-import com.deploy.playtogether.domain.test.Hello;
-import com.deploy.playtogether.domain.test.QHello;
+import com.deploy.playtogether.domain.hello.Hello;
+import com.deploy.playtogether.domain.hello.QHello;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,6 @@ class PlaytogetherApplicationTests {
 
 		JPAQueryFactory query = new JPAQueryFactory(em);
 		QHello qHello = QHello.hello;
-
 		Hello result = query
 				.selectFrom(qHello)
 				.fetchOne();
