@@ -36,9 +36,6 @@ dependencies {
 	implementation 'com.querydsl:querydsl-jpa'
 	implementation 'com.querydsl:querydsl-apt'
 
-
-	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6' // 쿼리 파라미터 로그 남길 수 있는 외부라이브러리
-
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -57,6 +54,11 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+// 빌드 시 jar파일 빌드하는 방법.
+jar {
+	enabled = false
 }
 
 /**
