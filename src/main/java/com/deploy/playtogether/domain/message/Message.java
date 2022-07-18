@@ -31,7 +31,7 @@ public class Message extends AuditingTimeEntity {
     private String content;
 
     @NotNull
-    private boolean read;
+    private boolean isReceiverRead;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
