@@ -1,5 +1,6 @@
 package com.deploy.playtogether.domain.message;
 
+import com.deploy.playtogether.domain.common.AuditingTimeEntity;
 import com.deploy.playtogether.domain.room.Room;
 import com.deploy.playtogether.domain.user.User;
 import lombok.AccessLevel;
@@ -20,7 +21,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Message {
+public class Message extends AuditingTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
