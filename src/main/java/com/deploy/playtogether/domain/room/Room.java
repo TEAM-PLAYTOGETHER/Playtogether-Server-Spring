@@ -30,12 +30,12 @@ public class Room extends AuditingTimeEntity {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_one_id")
-    private User user1;
+    @JoinColumn(name = "user_one_id")
+    private User userOne;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_two_id")
-    private User user2;
+    @JoinColumn(name = "user_two_id")
+    private User userTwo;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private List<Message> messages = new ArrayList<>();
