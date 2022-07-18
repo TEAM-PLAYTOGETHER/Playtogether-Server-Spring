@@ -36,6 +36,9 @@ public class Crew extends AuditingTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(length = 200, nullable = false)
+    private String description;
+
     @OneToMany(mappedBy = "crew", cascade = CascadeType.ALL)
     private List<CrewUser> members = new ArrayList<>();
 
