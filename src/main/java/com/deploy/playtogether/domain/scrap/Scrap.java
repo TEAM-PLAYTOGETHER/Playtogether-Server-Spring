@@ -28,18 +28,13 @@ public class Scrap extends AuditingTimeEntity {
     @Column(nullable = false)
     private Long userId;
 
-    @Column(nullable = false, length = 30)
-    @Enumerated(EnumType.STRING)
-    private ScrapStatus status;
-
-    private Scrap(Long lightId, Long userId, ScrapStatus status) {
+    private Scrap(Long lightId, Long userId) {
         this.lightId = lightId;
         this.userId = userId;
-        this.status = status;
     }
 
     public static Scrap of(Long planId, Long userId) {
-        return new Scrap(planId, userId, ScrapStatus.ACTIVE);
+        return new Scrap(planId, userId);
     }
 
 }
