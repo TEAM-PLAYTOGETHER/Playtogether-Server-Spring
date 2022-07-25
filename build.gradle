@@ -59,6 +59,8 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+	//local db 설정
+	runtimeOnly 'mysql:mysql-connector-java'
 }
 
 // 빌드 시 jar파일 빌드하는 방법.
