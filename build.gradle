@@ -49,9 +49,6 @@ dependencies {
 	implementation 'org.jetbrains:annotations:20.1.0'
 	compileOnly 'org.jetbrains:annotations:16.0.2'
 
-	//JUnit 4
-	testImplementation("org.junit.vintage:junit-vintage-engine") {
-		exclude group: "org.hamcrest", module: "hamcrest-core"
 	}
 }
 
