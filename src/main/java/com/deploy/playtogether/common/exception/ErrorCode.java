@@ -10,6 +10,7 @@ import static com.deploy.playtogether.common.exception.StatusCode.*;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public enum ErrorCode {
     // 400 Bad Request
+    VALIDATION_AUTH_TOKEN_EXCEPTION(BAD_REQUEST, "만료되거나 유효하지 않은 인증 토큰입니다"),
     VALIDATION_EXCEPTION(BAD_REQUEST, "잘못된 요청입니다"),
     VALIDATION_ENUM_VALUE_EXCEPTION(BAD_REQUEST, "잘못된 Enum 값 입니다"),
     VALIDATION_REQUEST_MISSING_EXCEPTION(BAD_REQUEST, "필수적인 요청 값이 입력되지 않았습니다"),
