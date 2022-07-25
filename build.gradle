@@ -36,6 +36,10 @@ dependencies {
 	implementation 'com.querydsl:querydsl-jpa'
 	implementation 'com.querydsl:querydsl-apt'
 
+	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+	implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+	annotationProcessor "org.mapstruct:mapstruct-processor:1.4.2.Final"
+	annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
