@@ -36,6 +36,7 @@ dependencies {
 	implementation 'com.querydsl:querydsl-jpa'
 	implementation 'com.querydsl:querydsl-apt'
 
+	implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 	implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 	annotationProcessor "org.mapstruct:mapstruct-processor:1.4.2.Final"
