@@ -31,12 +31,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-
-	//querydsl 추가
-	implementation 'com.querydsl:querydsl-jpa'
-	implementation 'com.querydsl:querydsl-apt'
-
 	implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
 	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 	implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 	annotationProcessor "org.mapstruct:mapstruct-processor:1.4.2.Final"
@@ -49,16 +47,16 @@ dependencies {
 	// Spring data redis for session
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.session:spring-session-data-redis'
+
+	//querydsl 추가
+	implementation 'com.querydsl:querydsl-jpa'
+	implementation 'com.querydsl:querydsl-apt'
+
 	//swagger
 	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 	implementation 'org.jetbrains:annotations:20.1.0'
 	compileOnly 'org.jetbrains:annotations:16.0.2'
 
-	}
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
 	//local db 설정
 	runtimeOnly 'mysql:mysql-connector-java'
 }
@@ -67,7 +65,15 @@ tasks.named('test') {
 jar {
 	enabled = false
 }
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:2020.0.4"
+	}
+}
 
+tasks.named('test') {
+	useJUnitPlatform()
+}
 /**
  * querydsl 설정 시작
  */
