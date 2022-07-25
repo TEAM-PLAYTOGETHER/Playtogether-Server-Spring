@@ -41,6 +41,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	// Spring data redis for session
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.session:spring-session-data-redis'
 	//swagger
 	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 	implementation 'org.jetbrains:annotations:20.1.0'
