@@ -34,4 +34,12 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom{
                 ).fetchFirst() != null;
     }
 
+    @Override
+    public User findUserBySocialIdAndSocialType(String socialId, UserSocialType socialType) {
+        return queryFactory.selectFrom(user)
+                .where(
+                        user.socialInfo.socialId.eq(socialId),
+                        user.socialInfo.socialType.eq(socialType)
+                ).fetchOne();
+    }
 }
