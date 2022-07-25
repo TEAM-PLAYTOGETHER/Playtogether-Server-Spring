@@ -27,4 +27,10 @@ public class AppleAuthService implements AuthService {
         return userService.registerUser(request.toCreateUserDto(socialId));
     }
 
+    @Override
+    public Long login(LoginDto request) {
+        String socialId = appleTokenDecoder.getSocialIdFromIdToken(request.getToken());
+        return UserServiceUtils.findUserBySocialIdAndSocialType(userRepository, socialId, socialType).getId();
+    }
+}
 

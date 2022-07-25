@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class GoogleAuthService implements AuthService {
 
     private final UserSocialType socialType = UserSocialType.GOOGLE;
+    private final UserRepository userRepository;
 
     private final GoogleAuthApiClient googleAuthApiCaller;
 
@@ -29,4 +30,9 @@ public class GoogleAuthService implements AuthService {
         return userService.registerUser(request.toCreateUserDto(response.getId()));
     }
 
+    @Override
+    public Long login(LoginDto request) {
+        GoogleProfileInfoResponse response = googleAuthApiCaller.getProfileInfo((HttpHeaderUtils.withBearerToken(request.getToken())));
+        return UserServiceUtils.findUserBySocialIdAndSocialType(userRepository, response.getId(), socialType).getId();
+    }
 }
