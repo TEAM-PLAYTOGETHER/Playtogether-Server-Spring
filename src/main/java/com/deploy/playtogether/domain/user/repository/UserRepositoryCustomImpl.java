@@ -35,6 +35,14 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom{
     }
 
     @Override
+    public User findUserById(Long userId) {
+        return queryFactory.selectFrom(user)
+                .where(
+                        user.id.eq(userId)
+                ).fetchOne();
+    }
+
+    @Override
     public User findUserBySocialIdAndSocialType(String socialId, UserSocialType socialType) {
         return queryFactory.selectFrom(user)
                 .where(
