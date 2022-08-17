@@ -12,6 +12,7 @@ public enum SuccessCode {
 
     SIGNUP_SUCCESS(SUCCESS, "회원가입이 완료되었습니다."),
     LOGIN_SUCCESS(SUCCESS, "로그인이 완료되었습니다."),
+    LIGHT_ADD_SUCCESS(SUCCESS, "번개 생성이 완료되었습니다."),
     CREW_ADD_SUCCESS(SUCCESS, "동아리 생성이 완료되었습니다.");
 
     private final StatusCode statusCode;
