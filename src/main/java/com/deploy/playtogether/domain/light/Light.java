@@ -1,5 +1,6 @@
 package com.deploy.playtogether.domain.light;
 
+import com.deploy.playtogether.common.util.ListToStringConverter;
 import com.deploy.playtogether.domain.common.AuditingTimeEntity;
 import com.deploy.playtogether.domain.crew.Crew;
 import com.deploy.playtogether.domain.lightUser.LightUser;
@@ -21,6 +22,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Enumerated;
 import javax.persistence.EnumType;
+import javax.persistence.Convert;
 
 
 import java.time.LocalDate;
@@ -46,8 +48,9 @@ public class Light extends AuditingTimeEntity {
     @Column
     private int peopleCnt;
 
-    @Column(nullable = false)
-    private String LightUrl;
+    @Column(length = 1000)
+    @Convert(converter = ListToStringConverter.class)
+    private List<String> imageUrls = new ArrayList<>();
 
     @Column(length = 200, nullable = false)
     private String description;
@@ -74,12 +77,11 @@ public class Light extends AuditingTimeEntity {
     @OneToMany(mappedBy = "light", cascade = CascadeType.ALL)
     private List<LightUser> members = new ArrayList<>();
 
-    public Light(Long id, String title, String place, int peopleCnt, String lightUrl, String description, LocalDateTime date, LocalTime time, LightCategory category, User user, Crew crew) {
-        this.id = id;
+    public Light(String title, String place, int peopleCnt, List<String> imageUrls, String description, LocalDate date, LocalTime time, LightCategory category, User user, Crew crew) {
         this.title = title;
         this.place = place;
         this.peopleCnt = peopleCnt;
-        this.LightUrl = lightUrl;
+        this.imageUrls = imageUrls;
         this.description = description;
         this.date = date;
         this.time = time;
