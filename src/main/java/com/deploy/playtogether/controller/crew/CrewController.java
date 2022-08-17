@@ -4,7 +4,7 @@ import com.deploy.playtogether.common.dto.ApiResponse;
 import com.deploy.playtogether.common.exception.SuccessCode;
 import com.deploy.playtogether.controller.crew.dto.request.CrewRequestDto;
 import com.deploy.playtogether.service.crew.CrewService;
-import com.deploy.playtogether.service.crew.dto.response.CrewResponse;
+import com.deploy.playtogether.service.crew.dto.response.CrewResponseDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +22,7 @@ public class CrewController {
 
     @ApiOperation("[인증] 동아리 생성 API")
     @PostMapping("/crew/{userId}")
-    public ApiResponse<CrewResponse> createCrew(@PathVariable Long userId, @RequestBody @Valid CrewRequestDto request){
+    public ApiResponse<CrewResponseDto> createCrew(@PathVariable Long userId, @RequestBody @Valid CrewRequestDto request){
         return ApiResponse.success(SuccessCode.LIGHT_ADD_SUCCESS, crewService.createCrew(userId, request.toServiceDto()));
     }
 }
