@@ -22,12 +22,12 @@ import javax.persistence.JoinColumn;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Crew extends AuditingTimeEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -45,8 +45,17 @@ public class Crew extends AuditingTimeEntity {
     @Column(length = 20, nullable = false)
     private String name;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 6, nullable = false)
     private String code;
 
+    public Crew(User user, String description, String name, String code) {
+        this.user = user;
+        this.description = description;
+        this.name = name;
+        this.code = code;
+    }
+    public static Crew newInstance(User user, String description, String name, String code){
+        return new Crew(user, description, name, code);
+    }
 
 }
