@@ -23,7 +23,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.EnumType;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,24 +40,25 @@ public class Light extends AuditingTimeEntity {
     @Column(length = 20, nullable = false)
     private String title;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20)
     private String place;
 
-    @Column(nullable = false)
+    @Column
     private int peopleCnt;
 
     @Column(nullable = false)
     private String LightUrl;
 
-    @Column(nullable = false)
+    @Column(length = 200, nullable = false)
     private String description;
 
-    @Column(nullable = false)
-    private LocalDateTime date;
+    @Column
+    private LocalDate date;
 
-    @Column(nullable = false)
+    @Column
     private LocalTime time;
 
+    //TODO 영어로 할건지, 먹갈할로 할건지.
     @Column(length = 10, nullable = false)
     @Enumerated(EnumType.STRING)
     private LightCategory category;
@@ -85,5 +86,9 @@ public class Light extends AuditingTimeEntity {
         this.category = category;
         this.user = user;
         this.crew = crew;
+    }
+
+    public static Light newInstance(String title, String place, int peopleCnt, List<String> imageUrls, String description, LocalDate date, LocalTime time, LightCategory category, User user, Crew crew){
+        return new Light(title, place, peopleCnt, imageUrls, description, date, time, category, user, crew);
     }
 }
