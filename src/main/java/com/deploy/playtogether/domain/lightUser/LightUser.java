@@ -34,4 +34,11 @@ public class LightUser extends AuditingTimeEntity {
     @JoinColumn(name = "light_id")
     private Light light;
 
+    public LightUser(User user, Light light) {
+        this.user = user;
+        this.light = light;
+    }
+    public static LightUser newInstance(User user, Light light){
+        return new LightUser(user, light);
+    }
 }
