@@ -4,4 +4,7 @@ server:
 
 spring:
   profiles:
-    default: local
+    group:
+      localEnv:
+        - "local"
+        - "aws"

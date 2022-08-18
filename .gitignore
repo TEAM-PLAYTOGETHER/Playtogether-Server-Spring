@@ -38,3 +38,9 @@ out/
 
 ### docker compose ###
 docker-compose.yml
+
+### application-local.yml ###
+application-local.yml
+
+### application-aws.yml ###
+application-aws.yml
