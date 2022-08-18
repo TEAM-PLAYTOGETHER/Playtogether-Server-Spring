@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.AccessLevel;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -23,13 +24,13 @@ public class LightDto {
     private String title;
     private LocalDate date;
     private LocalTime time;
-    private List<String> lightImages;
     private String place;
+    private List<MultipartFile> images;
     private int peopleCount;
     @NotNull
     private String description;
 
-    public static LightDto of (@NotNull LightCategory category, @NotNull String title, LocalDate date, LocalTime time, List<String> lightImages, String place, int peopleCount, @NotNull String description){
-        return new LightDto(category, title, date, time, lightImages, place, peopleCount, description);
+    public static LightDto of (@NotNull LightCategory category, @NotNull String title, LocalDate date, LocalTime time, String place, List<MultipartFile> images, int peopleCount, @NotNull String description){
+        return new LightDto(category, title, date, time, place, images, peopleCount, description);
     }
 }

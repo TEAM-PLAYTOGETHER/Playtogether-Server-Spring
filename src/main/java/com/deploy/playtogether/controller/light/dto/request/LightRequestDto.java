@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.AccessLevel;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -25,14 +26,14 @@ public class LightRequestDto {
     private String title;
     private LocalDate date;
     private LocalTime time;
-    private List<String> lightImages;
     private String place;
     private int peopleCount;
     @NotNull
     private String description;
+    private List<MultipartFile> images;
 
     public LightDto toServiceDto(){
-        return LightDto.of(category, title, date, time, lightImages, place, peopleCount, description);
+        return LightDto.of(category, title, date, time, place, images, peopleCount, description);
     }
 
 }
