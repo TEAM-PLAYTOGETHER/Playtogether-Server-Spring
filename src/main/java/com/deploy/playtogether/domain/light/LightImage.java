@@ -1,0 +1,37 @@
+package com.deploy.playtogether.domain.light;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+
+@Getter
+@Entity
+@NoArgsConstructor
+public class LightImage {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String imgUrl;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "light_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Light light;
+
+    public LightImage(String imgUrl, Light light) {
+        this.imgUrl = imgUrl;
+        this.light = light;
+    }
+}

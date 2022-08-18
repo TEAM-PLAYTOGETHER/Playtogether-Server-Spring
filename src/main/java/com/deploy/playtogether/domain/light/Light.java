@@ -1,6 +1,5 @@
 package com.deploy.playtogether.domain.light;
 
-import com.deploy.playtogether.common.util.ListToStringConverter;
 import com.deploy.playtogether.domain.common.AuditingTimeEntity;
 import com.deploy.playtogether.domain.crew.Crew;
 import com.deploy.playtogether.domain.lightUser.LightUser;
@@ -22,7 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Enumerated;
 import javax.persistence.EnumType;
-import javax.persistence.Convert;
+import javax.persistence.Transient;
 
 
 import java.time.LocalDate;
@@ -48,9 +47,8 @@ public class Light extends AuditingTimeEntity {
     @Column
     private int peopleCnt;
 
-    @Column(length = 1000)
-    @Convert(converter = ListToStringConverter.class)
-    private List<String> imageUrls = new ArrayList<>();
+    @Transient
+    private List<LightImage> lightImageList = new ArrayList<>();
 
     @Column(length = 200, nullable = false)
     private String description;
@@ -77,11 +75,10 @@ public class Light extends AuditingTimeEntity {
     @OneToMany(mappedBy = "light", cascade = CascadeType.ALL)
     private List<LightUser> members = new ArrayList<>();
 
-    public Light(String title, String place, int peopleCnt, List<String> imageUrls, String description, LocalDate date, LocalTime time, LightCategory category, User user, Crew crew) {
+    public Light(String title, String place, int peopleCnt, String description, LocalDate date, LocalTime time, LightCategory category, User user, Crew crew) {
         this.title = title;
         this.place = place;
         this.peopleCnt = peopleCnt;
-        this.imageUrls = imageUrls;
         this.description = description;
         this.date = date;
         this.time = time;
@@ -90,7 +87,7 @@ public class Light extends AuditingTimeEntity {
         this.crew = crew;
     }
 
-    public static Light newInstance(String title, String place, int peopleCnt, List<String> imageUrls, String description, LocalDate date, LocalTime time, LightCategory category, User user, Crew crew){
-        return new Light(title, place, peopleCnt, imageUrls, description, date, time, category, user, crew);
+    public static Light newInstance(String title, String place, int peopleCnt, String description, LocalDate date, LocalTime time, LightCategory category, User user, Crew crew){
+        return new Light(title, place, peopleCnt,  description, date, time, category, user, crew);
     }
 }
