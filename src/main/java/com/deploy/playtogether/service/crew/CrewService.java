@@ -3,6 +3,8 @@ package com.deploy.playtogether.service.crew;
 import com.deploy.playtogether.common.exception.model.NotFoundException;
 import com.deploy.playtogether.domain.crew.Crew;
 import com.deploy.playtogether.domain.crew.repository.CrewRepository;
+import com.deploy.playtogether.domain.crewUser.CrewUser;
+import com.deploy.playtogether.domain.crewUser.repository.CrewUserRepository;
 import com.deploy.playtogether.domain.user.User;
 import com.deploy.playtogether.domain.user.UserRepository;
 import com.deploy.playtogether.service.crew.dto.request.CrewDto;
@@ -17,6 +19,7 @@ import java.util.Random;
 @Service
 public class CrewService {
     private final CrewRepository crewRepository;
+    private final CrewUserRepository crewUserRepository;
     private final UserRepository userRepository;
 
     public CrewResponseDto createCrew(Long userId, CrewDto request) {
@@ -28,6 +31,7 @@ public class CrewService {
                 request.getDescription(),
                 code
         ));
+        crewUserRepository.save(CrewUser.newInstance(crew.getUser(), crew));
         return CrewResponseDto.of(
                 crew.getId(),
                 crew.getName(),

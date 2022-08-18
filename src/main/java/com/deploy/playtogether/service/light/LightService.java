@@ -7,6 +7,8 @@ import com.deploy.playtogether.domain.light.Light;
 import com.deploy.playtogether.domain.light.LightImage;
 import com.deploy.playtogether.domain.light.repository.LightImageRepository;
 import com.deploy.playtogether.domain.light.repository.LightRepository;
+import com.deploy.playtogether.domain.lightUser.LightUser;
+import com.deploy.playtogether.domain.lightUser.repository.LightUserRepository;
 import com.deploy.playtogether.domain.user.User;
 import com.deploy.playtogether.domain.user.UserRepository;
 import com.deploy.playtogether.service.light.dto.request.LightDto;
@@ -23,6 +25,7 @@ import java.util.List;
 public class LightService {
     private final LightRepository lightRepository;
     private final LightImageRepository lightImageRepository;
+    private final LightUserRepository lightUserRepository;
     private final UserRepository userRepository;
     private final CrewRepository crewRepository;
 
@@ -42,7 +45,7 @@ public class LightService {
                 crew
         ));
         List<String> lightImageList = saveLightImage(imagePath, light);
-
+        lightUserRepository.save(LightUser.newInstance(light.getUser(), light));
         return LightResponseDto.of(
                 light.getId(),
                 light.getCategory(),

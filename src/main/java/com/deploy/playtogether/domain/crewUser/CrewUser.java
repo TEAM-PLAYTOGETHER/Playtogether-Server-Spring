@@ -4,6 +4,7 @@ import com.deploy.playtogether.domain.common.AuditingTimeEntity;
 import com.deploy.playtogether.domain.crew.Crew;
 import com.deploy.playtogether.domain.user.User;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,4 +33,12 @@ public class CrewUser extends AuditingTimeEntity {
     @JoinColumn(name = "crew_id")
     private Crew crew;
 
+    public CrewUser( User user, Crew crew) {
+        this.user = user;
+        this.crew = crew;
+    }
+
+    public static CrewUser newInstance(User user, Crew crew){
+        return new CrewUser(user, crew);
+    }
 }
