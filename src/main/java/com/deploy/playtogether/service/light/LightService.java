@@ -61,7 +61,7 @@ public class LightService {
     private List<String> saveLightImage(List<String> imagePath, Light light) {
         List<String> imgList = new ArrayList<>();
         for (String imgUrl : imagePath) {
-            LightImage img = new LightImage(imgUrl, light);
+            LightImage img = LightImage.newInstance(imgUrl, light);
             lightImageRepository.save(img);
             imgList.add(img.getImgUrl());
         }
