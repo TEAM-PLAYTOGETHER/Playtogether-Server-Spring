@@ -1,5 +1,6 @@
-package com.deploy.playtogether.domain.light;
+package com.deploy.playtogether.domain.lightImage;
 
+import com.deploy.playtogether.domain.light.Light;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
