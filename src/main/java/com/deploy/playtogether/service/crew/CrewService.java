@@ -2,9 +2,9 @@ package com.deploy.playtogether.service.crew;
 
 import com.deploy.playtogether.common.exception.model.NotFoundException;
 import com.deploy.playtogether.domain.crew.Crew;
-import com.deploy.playtogether.domain.crew.repository.CrewRepository;
+import com.deploy.playtogether.domain.crew.CrewRepository;
 import com.deploy.playtogether.domain.crewUser.CrewUser;
-import com.deploy.playtogether.domain.crewUser.repository.CrewUserRepository;
+import com.deploy.playtogether.domain.crewUser.CrewUserRepository;
 import com.deploy.playtogether.domain.user.User;
 import com.deploy.playtogether.domain.user.UserRepository;
 import com.deploy.playtogether.service.crew.dto.request.CrewDto;

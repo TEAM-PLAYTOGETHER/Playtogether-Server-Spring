@@ -2,6 +2,7 @@ package com.deploy.playtogether.domain.light;
 
 import com.deploy.playtogether.domain.common.AuditingTimeEntity;
 import com.deploy.playtogether.domain.crew.Crew;
+import com.deploy.playtogether.domain.lightImage.LightImage;
 import com.deploy.playtogether.domain.lightUser.LightUser;
 import com.deploy.playtogether.domain.user.User;
 import lombok.AccessLevel;
