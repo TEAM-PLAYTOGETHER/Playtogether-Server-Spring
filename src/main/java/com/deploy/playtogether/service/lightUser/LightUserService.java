@@ -30,7 +30,7 @@ public class LightUserService {
         if (lightUser.isEmpty()){
             lightUserRepository.save(LightUser.newInstance(user, light));
         } else {
-            throw new ConflictException("해당 여행은 이미 찜한 상태입니다.", ErrorCode.CONFLICT_EXCEPTION);
+            throw new ConflictException("해당 번개는 이미 참여한 상태입니다.", ErrorCode.CONFLICT_EXCEPTION);
         }
 
     }
