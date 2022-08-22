@@ -33,8 +33,8 @@ public class Scrap extends AuditingTimeEntity {
         this.userId = userId;
     }
 
-    public static Scrap of(Long planId, Long userId) {
-        return new Scrap(planId, userId);
+    public static Scrap of(Long lightId, Long userId) {
+        return new Scrap(lightId, userId);
     }
 
 }

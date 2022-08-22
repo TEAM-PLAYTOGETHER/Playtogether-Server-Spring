@@ -15,7 +15,10 @@ public enum SuccessCode {
     LIGHT_ADD_SUCCESS(SUCCESS, "번개 생성이 완료되었습니다."),
     CREW_ADD_SUCCESS(SUCCESS, "동아리 생성이 완료되었습니다."),
     ENTER_LIGHT_SUCCESS(SUCCESS, "번개 참여가 완료되었습니다."),
-    OUT_LIGHT_SUCCESS(SUCCESS, "번개 참여 취소가 완료되었습니다.");
+    OUT_LIGHT_SUCCESS(SUCCESS, "번개 참여 취소가 완료되었습니다."),
+    LIGHT_SCRAP_SUCCESS(SUCCESS, "번개 찜하기가 완료되었습니다."),
+    LIGHT_DELETE_SCRAP_SUCCESS(SUCCESS, "번재 찜하기가 취소 되었습니다."),
+    ;
 
     private final StatusCode statusCode;
     private final String message;

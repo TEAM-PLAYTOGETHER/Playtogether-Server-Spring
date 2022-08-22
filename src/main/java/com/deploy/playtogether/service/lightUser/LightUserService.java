@@ -30,7 +30,7 @@ public class LightUserService {
         if (lightUser.isEmpty()){
             lightUserRepository.save(LightUser.newInstance(user, light));
         } else {
-            throw new ConflictException("해당 여행은 이미 찜한 상태입니다.", ErrorCode.CONFLICT_EXCEPTION);
+            throw new ConflictException("해당 번개는 이미 참여한 상태입니다.", ErrorCode.CONFLICT_EXCEPTION);
         }
 
     }
@@ -39,6 +39,6 @@ public class LightUserService {
     public void outLight(Long lightId, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다."));
         Light light = lightRepository.findById(lightId).orElseThrow(() -> new NotFoundException("존재하지 않는 번개입니다."));
-        lightUserRepository.deleteByUserIdAndLightId(user.getId(), light.getId());
+        lightUserRepository.deleteByLightIdAndUserId(user.getId(), light.getId());
     }
 }
