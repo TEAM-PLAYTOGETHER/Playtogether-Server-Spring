@@ -39,6 +39,6 @@ public class LightUserService {
     public void outLight(Long lightId, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다."));
         Light light = lightRepository.findById(lightId).orElseThrow(() -> new NotFoundException("존재하지 않는 번개입니다."));
-        lightUserRepository.deleteByUserIdAndLightId(user.getId(), light.getId());
+        lightUserRepository.deleteByLightIdAndUserId(user.getId(), light.getId());
     }
 }
