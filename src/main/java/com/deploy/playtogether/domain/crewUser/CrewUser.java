@@ -33,12 +33,12 @@ public class CrewUser extends AuditingTimeEntity {
     @JoinColumn(name = "crew_id")
     private Crew crew;
 
-    public CrewUser( User user, Crew crew) {
+    private CrewUser(final User user, final Crew crew) {
         this.user = user;
         this.crew = crew;
     }
 
-    public static CrewUser newInstance(User user, Crew crew){
+    public static CrewUser newInstance(final User user, final Crew crew){
         return new CrewUser(user, crew);
     }
 }

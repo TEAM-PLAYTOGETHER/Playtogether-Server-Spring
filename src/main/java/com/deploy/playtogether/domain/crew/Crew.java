@@ -40,7 +40,7 @@ public class Crew extends AuditingTimeEntity {
     private String description;
 
     @OneToMany(mappedBy = "crew", cascade = CascadeType.ALL)
-    private List<CrewUser> members = new ArrayList<>();
+    private final List<CrewUser> members = new ArrayList<>();
 
     @Column(length = 20, nullable = false)
     private String name;
@@ -48,13 +48,13 @@ public class Crew extends AuditingTimeEntity {
     @Column(length = 6, nullable = false)
     private String code;
 
-    public Crew(User user, String description, String name, String code) {
+    private Crew(final User user, final String description, final String name, final String code) {
         this.user = user;
         this.description = description;
         this.name = name;
         this.code = code;
     }
-    public static Crew newInstance(User user, String description, String name, String code){
+    public static Crew newInstance(final User user, final String description, final String name, final String code){
         return new Crew(user, description, name, code);
     }
 
