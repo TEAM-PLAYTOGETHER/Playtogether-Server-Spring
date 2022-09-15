@@ -22,7 +22,7 @@ public class CrewController {
 
     @ApiOperation("[인증] 동아리 생성 API")
     @PostMapping("/crew/{userId}")
-    public ApiResponse<CrewResponseDto> createCrew(@PathVariable Long userId, @RequestBody @Valid CrewRequestDto request){
+    public ApiResponse<CrewResponseDto> createCrew(@PathVariable final Long userId, @RequestBody @Valid final CrewRequestDto request){
         return ApiResponse.success(SuccessCode.LIGHT_ADD_SUCCESS, crewService.createCrew(userId, request.toServiceDto()));
     }
 }

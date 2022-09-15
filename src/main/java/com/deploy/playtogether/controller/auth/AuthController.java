@@ -26,18 +26,18 @@ public class AuthController {
 
     @ApiOperation("회원가입 페이지 - 회원가입을 요청합니다")
     @PostMapping("/v1/signup")
-    public ApiResponse<LoginResponse> signUp(@Valid @RequestBody SignUpRequestDto request) {
-        AuthService authService = authServiceProvider.getAuthService(request.getSocialType());
-        Long userId = authService.signUp(request.toServiceDto());
+    public ApiResponse<LoginResponse> signUp(@Valid @RequestBody final SignUpRequestDto request) {
+        final AuthService authService = authServiceProvider.getAuthService(request.getSocialType());
+        final Long userId = authService.signUp(request.toServiceDto());
         httpSession.setAttribute(USER_ID, userId);
         return ApiResponse.success(SuccessCode.SIGNUP_SUCCESS, LoginResponse.of(httpSession.getId(), userId));
     }
 
     @ApiOperation("로그인 페이지 - 로그인을 요청합니다")
     @PostMapping("/v1/login")
-    public ApiResponse<LoginResponse> login(@Valid @RequestBody LoginRequestDto request) {
-        AuthService authService = authServiceProvider.getAuthService(request.getSocialType());
-        Long userId = authService.login(request.toServiceDto());
+    public ApiResponse<LoginResponse> login(@Valid @RequestBody final LoginRequestDto request) {
+        final AuthService authService = authServiceProvider.getAuthService(request.getSocialType());
+        final Long userId = authService.login(request.toServiceDto());
         httpSession.setAttribute(USER_ID, userId);
         return ApiResponse.success(SuccessCode.LOGIN_SUCCESS, LoginResponse.of(httpSession.getId(), userId));
     }

@@ -22,10 +22,10 @@ public class CrewService {
     private final CrewUserRepository crewUserRepository;
     private final UserRepository userRepository;
 
-    public CrewResponseDto createCrew(Long userId, CrewDto request) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저 입니다."));
-        String code = CreateRandomCode();
-        Crew crew = crewRepository.save(Crew.newInstance(
+    public CrewResponseDto createCrew(final Long userId, final CrewDto request) {
+        final User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저 입니다."));
+        final String code = CreateRandomCode();
+        final Crew crew = crewRepository.save(Crew.newInstance(
                 user,
                 request.getCrewName(),
                 request.getDescription(),
@@ -41,11 +41,11 @@ public class CrewService {
         );
     }
     private String CreateRandomCode() {
-        int leftLimit = 65; // 'A'
-        int rightLimit = 90; // 'Z'
-        int targetStringLength = 6;
-        Random random = new Random();
-        String randomCode = random.ints(leftLimit, rightLimit + 1)
+        final int leftLimit = 65; // 'A'
+        final int rightLimit = 90; // 'Z'
+        final int targetStringLength = 6;
+        final Random random = new Random();
+        final String randomCode = random.ints(leftLimit, rightLimit + 1)
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
