@@ -31,11 +31,11 @@ public class LightImage {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Light light;
 
-    public LightImage(String imgUrl, Light light) {
+    private LightImage(final String imgUrl, final Light light) {
         this.imgUrl = imgUrl;
         this.light = light;
     }
-    public static LightImage newInstance(String imgUrl, Light light){
+    public static LightImage newInstance(final String imgUrl, final Light light){
         return new LightImage(imgUrl, light);
     }
 }

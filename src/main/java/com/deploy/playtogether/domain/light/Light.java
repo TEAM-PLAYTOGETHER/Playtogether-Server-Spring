@@ -4,6 +4,7 @@ import com.deploy.playtogether.domain.common.AuditingTimeEntity;
 import com.deploy.playtogether.domain.crew.Crew;
 import com.deploy.playtogether.domain.lightImage.LightImage;
 import com.deploy.playtogether.domain.lightUser.LightUser;
+import com.deploy.playtogether.domain.reportLight.ReportLight;
 import com.deploy.playtogether.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -49,7 +50,7 @@ public class Light extends AuditingTimeEntity {
     private int peopleCnt;
 
     @Transient
-    private List<LightImage> lightImageList = new ArrayList<>();
+    private final List<LightImage> lightImageList = new ArrayList<>();
 
     @Column(length = 200, nullable = false)
     private String description;
@@ -74,9 +75,12 @@ public class Light extends AuditingTimeEntity {
     private Crew crew;
 
     @OneToMany(mappedBy = "light", cascade = CascadeType.ALL)
-    private List<LightUser> members = new ArrayList<>();
+    private final List<LightUser> members = new ArrayList<>();
 
-    public Light(String title, String place, int peopleCnt, String description, LocalDate date, LocalTime time, LightCategory category, User user, Crew crew) {
+    @OneToMany(mappedBy = "light", cascade = CascadeType.ALL)
+    private final List<ReportLight> reports = new ArrayList<>();
+
+    private Light(final String title, final String place, final int peopleCnt, final String description, final LocalDate date, final LocalTime time, final LightCategory category, final User user, final Crew crew) {
         this.title = title;
         this.place = place;
         this.peopleCnt = peopleCnt;
@@ -88,7 +92,7 @@ public class Light extends AuditingTimeEntity {
         this.crew = crew;
     }
 
-    public static Light newInstance(String title, String place, int peopleCnt, String description, LocalDate date, LocalTime time, LightCategory category, User user, Crew crew){
+    public static Light newInstance(final String title, final String place, final int peopleCnt, final String description, final LocalDate date, final LocalTime time, final LightCategory category, final User user, final Crew crew){
         return new Light(title, place, peopleCnt,  description, date, time, category, user, crew);
     }
 }

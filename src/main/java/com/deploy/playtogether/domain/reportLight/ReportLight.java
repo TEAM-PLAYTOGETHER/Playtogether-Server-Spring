@@ -1,25 +1,24 @@
-package com.deploy.playtogether.domain.crewUser;
+package com.deploy.playtogether.domain.reportLight;
 
 import com.deploy.playtogether.domain.common.AuditingTimeEntity;
-import com.deploy.playtogether.domain.crew.Crew;
+import com.deploy.playtogether.domain.light.Light;
 import com.deploy.playtogether.domain.user.User;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CrewUser extends AuditingTimeEntity {
+public class ReportLight extends AuditingTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,15 +29,15 @@ public class CrewUser extends AuditingTimeEntity {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "crew_id")
-    private Crew crew;
+    @JoinColumn(name = "light_id")
+    private Light light;
 
-    private CrewUser(final User user, final Crew crew) {
+    private ReportLight(final User user, final Light light) {
         this.user = user;
-        this.crew = crew;
+        this.light = light;
+    }
+    public static ReportLight newInstance(final User user, final Light light){
+        return new ReportLight(user, light);
     }
 
-    public static CrewUser newInstance(final User user, final Crew crew){
-        return new CrewUser(user, crew);
-    }
 }
