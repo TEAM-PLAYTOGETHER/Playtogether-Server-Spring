@@ -77,6 +77,8 @@ public class Light extends AuditingTimeEntity {
     @OneToMany(mappedBy = "light", cascade = CascadeType.ALL)
     private final List<LightUser> members = new ArrayList<>();
 
+    @OneToMany(mappedBy = "light", cascade = CascadeType.ALL)
+    private final List<ReportLight> reports = new ArrayList<>();
 
     private Light(final String title, final String place, final int peopleCnt, final String description, final LocalDate date, final LocalTime time, final LightCategory category, final User user, final Crew crew) {
         this.title = title;
