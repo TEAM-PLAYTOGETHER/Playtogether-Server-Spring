@@ -18,13 +18,13 @@ public class LightUserController {
 
     @ApiOperation("[인증] 번개 참여 API")
     @PostMapping("/light/enter/{lightId}/{userId}")
-    public ApiResponse enterLight(@PathVariable Long lightId, @PathVariable Long userId){
+    public ApiResponse enterLight(@PathVariable final Long lightId, @PathVariable final Long userId){
         lightUserService.enterLight(lightId, userId);
         return ApiResponse.success(SuccessCode.ENTER_LIGHT_SUCCESS);
     }
     @ApiOperation("[인증] 번개 참여 취소 API")
     @DeleteMapping("/light/enter/{lightId}/{userId}")
-    public ApiResponse outLight(@PathVariable Long lightId, @PathVariable Long userId){
+    public ApiResponse outLight(@PathVariable final Long lightId, @PathVariable final Long userId){
         lightUserService.outLight(lightId, userId);
         return ApiResponse.success(SuccessCode.OUT_LIGHT_SUCCESS);
     }

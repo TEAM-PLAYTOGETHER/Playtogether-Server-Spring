@@ -30,10 +30,10 @@ public class LightService {
     private final CrewRepository crewRepository;
 
     @Transactional
-    public LightResponseDto createLight(Long userId, Long crewId, LightDto request, List<String> imagePath) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다."));
-        Crew crew = crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다."));
-        Light light = lightRepository.save(Light.newInstance(
+    public LightResponseDto createLight(final Long userId, final Long crewId, final LightDto request, final List<String> imagePath) {
+        final User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다."));
+        final Crew crew = crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다."));
+        final Light light = lightRepository.save(Light.newInstance(
                 request.getTitle(),
                 request.getPlace(),
                 request.getPeopleCount(),
@@ -44,7 +44,7 @@ public class LightService {
                 user,
                 crew
         ));
-        List<String> lightImageList = saveLightImage(imagePath, light);
+        final List<String> lightImageList = saveLightImage(imagePath, light);
         lightUserRepository.save(LightUser.newInstance(light.getUser(), light));
         return LightResponseDto.of(
                 light.getId(),
@@ -61,10 +61,10 @@ public class LightService {
         );
     }
 
-    private List<String> saveLightImage(List<String> imagePath, Light light) {
-        List<String> imgList = new ArrayList<>();
-        for (String imgUrl : imagePath) {
-            LightImage img = LightImage.newInstance(imgUrl, light);
+    private List<String> saveLightImage(final List<String> imagePath, final Light light) {
+        final List<String> imgList = new ArrayList<>();
+        for (final String imgUrl : imagePath) {
+            final LightImage img = LightImage.newInstance(imgUrl, light);
             lightImageRepository.save(img);
             imgList.add(img.getImgUrl());
         }

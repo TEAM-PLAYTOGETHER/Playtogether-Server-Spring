@@ -23,22 +23,24 @@ public class LightUserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void enterLight(Long lightId, Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다."));
-        Light light = lightRepository.findById(lightId).orElseThrow(() -> new NotFoundException("존재하지 않는 번개입니다."));
-        Optional<LightUser> lightUser = lightUserRepository.findByUserIdAndLightId(userId, lightId);
-        if (lightUser.isEmpty()){
-            lightUserRepository.save(LightUser.newInstance(user, light));
-        } else {
+    public void enterLight(final Long lightId, final Long userId) {
+        final User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다."));
+        final Light light = lightRepository.findById(lightId).orElseThrow(() -> new NotFoundException("존재하지 않는 번개입니다."));
+        checkLightUser(lightId, userId);
+        lightUserRepository.save(LightUser.newInstance(user, light));
+    }
+
+    private void checkLightUser(Long lightId, Long userId) {
+        final Optional<LightUser> lightUser = lightUserRepository.findByUserIdAndLightId(userId, lightId);
+        if (lightUser.isPresent()){
             throw new ConflictException("해당 번개는 이미 참여한 상태입니다.", ErrorCode.CONFLICT_EXCEPTION);
         }
-
     }
 
     @Transactional
-    public void outLight(Long lightId, Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다."));
-        Light light = lightRepository.findById(lightId).orElseThrow(() -> new NotFoundException("존재하지 않는 번개입니다."));
+    public void outLight(final Long lightId, final Long userId) {
+        final User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다."));
+        final Light light = lightRepository.findById(lightId).orElseThrow(() -> new NotFoundException("존재하지 않는 번개입니다."));
         lightUserRepository.deleteByLightIdAndUserId(user.getId(), light.getId());
     }
 }

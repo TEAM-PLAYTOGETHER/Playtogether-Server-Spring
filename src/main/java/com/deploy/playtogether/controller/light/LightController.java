@@ -23,10 +23,10 @@ public class LightController {
     private final S3Service s3Service;
 
     @ApiOperation("[인증] 번개 생성 API")
-    @PostMapping(value = "/light/add/{crewId}/{userId}", consumes = {"multipart/form-data"})
-    public ApiResponse<LightResponseDto> createLight(@PathVariable Long userId, @PathVariable Long crewId,
-                                                     @ModelAttribute @Valid LightRequestDto request){
-        List<String> imgPaths = s3Service.upload(request.getImages());
+    @PostMapping(value = "/light/add/{crewId}/{userId}", consumes = "multipart/form-data")
+    public ApiResponse<LightResponseDto> createLight(@PathVariable final Long userId, @PathVariable final Long crewId,
+                                                     @ModelAttribute @Valid final LightRequestDto request){
+        final List<String> imgPaths = s3Service.upload(request.getImages());
         return ApiResponse.success(SuccessCode.LIGHT_ADD_SUCCESS, lightService.createLight(userId, crewId, request.toServiceDto(), imgPaths));
     }
 }

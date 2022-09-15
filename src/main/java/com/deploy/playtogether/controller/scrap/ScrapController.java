@@ -18,14 +18,14 @@ public class ScrapController {
 
     @ApiOperation("[인증] 번개 찜 API")
     @PostMapping("/light/scrap/{lightId}/{userId}")
-    public ApiResponse addScrap(@PathVariable Long lightId, @PathVariable Long userId){
+    public ApiResponse addScrap(@PathVariable final Long lightId, @PathVariable final Long userId){
         scrapService.addScrap(lightId, userId);
         return ApiResponse.success(SuccessCode.LIGHT_SCRAP_SUCCESS);
     }
 
     @ApiOperation("[인증] 번개 찜 취소 API")
     @DeleteMapping("/light/scrap/{lightId}/{userId}")
-    public ApiResponse deleteScrap(@PathVariable Long lightId, @PathVariable Long userId){
+    public ApiResponse deleteScrap(@PathVariable final Long lightId, @PathVariable final Long userId){
         scrapService.deleteScrap(lightId, userId);
         return ApiResponse.success(SuccessCode.LIGHT_DELETE_SCRAP_SUCCESS);
     }
