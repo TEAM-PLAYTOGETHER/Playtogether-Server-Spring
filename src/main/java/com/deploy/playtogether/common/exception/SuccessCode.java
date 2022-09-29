@@ -18,6 +18,7 @@ public enum SuccessCode {
     OUT_LIGHT_SUCCESS(SUCCESS, "번개 참여 취소가 완료되었습니다."),
     LIGHT_SCRAP_SUCCESS(SUCCESS, "번개 찜하기가 완료되었습니다."),
     LIGHT_DELETE_SCRAP_SUCCESS(SUCCESS, "번재 찜하기가 취소 되었습니다."),
+    REPORT_LIGHT_SUCCESS(SUCCESS, "번개 신고가 완료되었습니다.")
     ;
 
     private final StatusCode statusCode;
