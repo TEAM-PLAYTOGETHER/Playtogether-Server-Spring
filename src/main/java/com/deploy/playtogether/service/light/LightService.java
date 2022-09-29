@@ -13,11 +13,10 @@ import com.deploy.playtogether.domain.lightUser.LightUser;
 import com.deploy.playtogether.domain.lightUser.LightUserRepository;
 import com.deploy.playtogether.domain.reportLight.ReportLight;
 import com.deploy.playtogether.domain.reportLight.ReportLightRepository;
-import com.deploy.playtogether.domain.scrap.Scrap;
 import com.deploy.playtogether.domain.user.User;
 import com.deploy.playtogether.domain.user.UserRepository;
 import com.deploy.playtogether.service.light.dto.request.LightDto;
-import com.deploy.playtogether.service.light.dto.request.ReportDto;
+import com.deploy.playtogether.service.light.dto.request.ReportLightDto;
 import com.deploy.playtogether.service.light.dto.response.LightResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -80,7 +79,7 @@ public class LightService {
     }
 
     @Transactional
-    public void reportLight(final Long crewId, final Long lightId, final Long userId, final ReportDto request) {
+    public void reportLight(final Long crewId, final Long lightId, final Long userId, final ReportLightDto request) {
         crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다.", ErrorCode.NOT_FOUND_EXCEPTION));
         final User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다.", ErrorCode.NOT_FOUND_USER_EXCEPTION));
         final Light light = lightRepository.findById(lightId).orElseThrow(() -> new NotFoundException("존재하지 않는 번개입니다.", ErrorCode.NOT_FOUND_EXCEPTION));

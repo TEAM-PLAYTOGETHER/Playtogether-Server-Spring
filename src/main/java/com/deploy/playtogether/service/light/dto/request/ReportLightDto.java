@@ -1,6 +1,5 @@
-package com.deploy.playtogether.controller.light.dto.request;
+package com.deploy.playtogether.service.light.dto.request;
 
-import com.deploy.playtogether.service.light.dto.request.ReportDto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +16,7 @@ public class ReportLightDto {
     @NotNull
     private String reportReason;
 
-    public ReportDto toServiceDto(){
-        return ReportDto.of(reportReason);
+    public static ReportLightDto of(@NotNull final String reportReason) {
+        return new ReportLightDto(reportReason);
     }
 }
