@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,16 +29,21 @@ public class ReportLight extends AuditingTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(length = 100)
+    private String reportReason;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "light_id")
     private Light light;
 
-    private ReportLight(final User user, final Light light) {
+    private ReportLight(final User user, final String reportReason, final Light light) {
         this.user = user;
+        this.reportReason = reportReason;
         this.light = light;
     }
-    public static ReportLight newInstance(final User user, final Light light){
-        return new ReportLight(user, light);
+
+    public static ReportLight newInstance(final User user, final String reportReason, final Light light){
+        return new ReportLight(user, reportReason, light);
     }
 
 }

@@ -30,7 +30,9 @@ public class LightDto {
     @NotNull
     private String description;
 
-    public static LightDto of (@NotNull LightCategory category, @NotNull String title, LocalDate date, LocalTime time, String place, List<MultipartFile> images, int peopleCount, @NotNull String description){
+    public static LightDto of(@NotNull final LightCategory category, @NotNull final String title, final LocalDate date,
+                              final LocalTime time, final String place, final List<MultipartFile> images, final int peopleCount,
+                              @NotNull final String description) {
         return new LightDto(category, title, date, time, place, images, peopleCount, description);
     }
 }

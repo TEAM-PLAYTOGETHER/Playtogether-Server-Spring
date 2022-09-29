@@ -1,5 +1,7 @@
 package com.deploy.playtogether.service.light;
 
+import com.deploy.playtogether.common.exception.ErrorCode;
+import com.deploy.playtogether.common.exception.model.ConflictException;
 import com.deploy.playtogether.common.exception.model.NotFoundException;
 import com.deploy.playtogether.domain.crew.Crew;
 import com.deploy.playtogether.domain.crew.CrewRepository;
@@ -9,9 +11,12 @@ import com.deploy.playtogether.domain.lightImage.LightImageRepository;
 import com.deploy.playtogether.domain.light.LightRepository;
 import com.deploy.playtogether.domain.lightUser.LightUser;
 import com.deploy.playtogether.domain.lightUser.LightUserRepository;
+import com.deploy.playtogether.domain.reportLight.ReportLight;
+import com.deploy.playtogether.domain.reportLight.ReportLightRepository;
 import com.deploy.playtogether.domain.user.User;
 import com.deploy.playtogether.domain.user.UserRepository;
 import com.deploy.playtogether.service.light.dto.request.LightDto;
+import com.deploy.playtogether.service.light.dto.request.ReportLightDto;
 import com.deploy.playtogether.service.light.dto.response.LightResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -28,6 +34,7 @@ public class LightService {
     private final LightUserRepository lightUserRepository;
     private final UserRepository userRepository;
     private final CrewRepository crewRepository;
+    private final ReportLightRepository reportLightRepository;
 
     @Transactional
     public LightResponseDto createLight(final Long userId, final Long crewId, final LightDto request, final List<String> imagePath) {
@@ -69,5 +76,27 @@ public class LightService {
             imgList.add(img.getImgUrl());
         }
         return imgList;
+    }
+
+    @Transactional
+    public void reportLight(final Long crewId, final Long lightId, final Long userId, final ReportLightDto request) {
+        crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다.", ErrorCode.NOT_FOUND_EXCEPTION));
+        final User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다.", ErrorCode.NOT_FOUND_USER_EXCEPTION));
+        final Light light = lightRepository.findById(lightId).orElseThrow(() -> new NotFoundException("존재하지 않는 번개입니다.", ErrorCode.NOT_FOUND_EXCEPTION));
+        checkLightReport(user, light);
+        reportLightRepository.save(
+                ReportLight.newInstance(
+                        user,
+                        request.getReportReason(),
+                        light
+                )
+        );
+    }
+
+    private void checkLightReport(final User user, final Light light) {
+        final Optional<ReportLight> reportLight = reportLightRepository.findByUserIdAndLightId(user.getId(), light.getId());
+            if (reportLight.isPresent()){
+            throw new ConflictException("해당 번개를 이미 신고한 상태입니다.", ErrorCode.CONFLICT_EXCEPTION);
+        }
     }
 }
