@@ -61,6 +61,12 @@ public class Light extends AuditingTimeEntity {
     @Column
     private LocalTime time;
 
+    @Column
+    private int scpCnt;
+
+    @Column
+    private int lightMemberCnt;
+
     //TODO 영어로 할건지, 먹갈할로 할건지.
     @Column(length = 10, nullable = false)
     @Enumerated(EnumType.STRING)
@@ -80,19 +86,28 @@ public class Light extends AuditingTimeEntity {
     @OneToMany(mappedBy = "light", cascade = CascadeType.ALL)
     private final List<ReportLight> reports = new ArrayList<>();
 
-    private Light(final String title, final String place, final int peopleCnt, final String description, final LocalDate date, final LocalTime time, final LightCategory category, final User user, final Crew crew) {
+    private Light(final String title, final String place, final int peopleCnt, final String description, final LocalDate date, final LocalTime time, final int scpCnt, final int lightMemberCnt, final LightCategory category, final User user, final Crew crew) {
         this.title = title;
         this.place = place;
         this.peopleCnt = peopleCnt;
         this.description = description;
         this.date = date;
         this.time = time;
+        this.lightMemberCnt = lightMemberCnt;
+        this.scpCnt = scpCnt;
         this.category = category;
         this.user = user;
         this.crew = crew;
     }
 
     public static Light newInstance(final String title, final String place, final int peopleCnt, final String description, final LocalDate date, final LocalTime time, final LightCategory category, final User user, final Crew crew){
-        return new Light(title, place, peopleCnt,  description, date, time, category, user, crew);
+        return new Light(title, place, peopleCnt,  description, date, time, 0, 0, category, user, crew);
+    }
+
+    public void updateScpCnt(){
+        this.scpCnt += 1;
+    }
+    public void updateMemberCnt(){
+        this.lightMemberCnt += 1;
     }
 }

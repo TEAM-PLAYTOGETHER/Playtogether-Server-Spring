@@ -17,14 +17,18 @@ import com.deploy.playtogether.domain.user.User;
 import com.deploy.playtogether.domain.user.UserRepository;
 import com.deploy.playtogether.service.light.dto.request.LightDto;
 import com.deploy.playtogether.service.light.dto.request.ReportLightDto;
+import com.deploy.playtogether.service.light.dto.response.HotLightResponse;
 import com.deploy.playtogether.service.light.dto.response.LightResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -37,7 +41,7 @@ public class LightService {
     private final ReportLightRepository reportLightRepository;
 
     @Transactional
-    public LightResponseDto createLight(final Long userId, final Long crewId, final LightDto request, final List<String> imagePath) {
+    public void createLight(final Long userId, final Long crewId, final LightDto request, final List<String> imagePath) {
         final User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다."));
         final Crew crew = crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다."));
         final Light light = lightRepository.save(Light.newInstance(
@@ -51,31 +55,8 @@ public class LightService {
                 user,
                 crew
         ));
-        final List<String> lightImageList = saveLightImage(imagePath, light);
+        saveLightImage(imagePath, light);
         lightUserRepository.save(LightUser.newInstance(light.getUser(), light));
-        return LightResponseDto.of(
-                light.getId(),
-                light.getCategory(),
-                light.getTitle(),
-                light.getDate(),
-                light.getTime(),
-                lightImageList,
-                light.getPlace(),
-                light.getPeopleCnt(),
-                light.getDescription(),
-                light.getUser().getId(),
-                light.getCrew().getId()
-        );
-    }
-
-    private List<String> saveLightImage(final List<String> imagePath, final Light light) {
-        final List<String> imgList = new ArrayList<>();
-        for (final String imgUrl : imagePath) {
-            final LightImage img = LightImage.newInstance(imgUrl, light);
-            lightImageRepository.save(img);
-            imgList.add(img.getImgUrl());
-        }
-        return imgList;
     }
 
     @Transactional
@@ -83,7 +64,9 @@ public class LightService {
         crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다.", ErrorCode.NOT_FOUND_EXCEPTION));
         final User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다.", ErrorCode.NOT_FOUND_USER_EXCEPTION));
         final Light light = lightRepository.findById(lightId).orElseThrow(() -> new NotFoundException("존재하지 않는 번개입니다.", ErrorCode.NOT_FOUND_EXCEPTION));
+
         checkLightReport(user, light);
+
         reportLightRepository.save(
                 ReportLight.newInstance(
                         user,
@@ -93,9 +76,34 @@ public class LightService {
         );
     }
 
+    @Transactional
+    public List<HotLightResponse> getHotLight(Long crewId) {
+        crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다."));
+        Pageable page = PageRequest.of(0, 5);
+        List<Light> lights = lightRepository.findAllByOrderByScpCntDesc(page);
+
+        return lights.stream()
+                .map(l -> HotLightResponse.of(
+                        l.getId(), l.getCategory(), l.getTitle(), l.getDate(), l.getTime(),
+                        l.getPlace(), l.getPeopleCnt(), l.getScpCnt(),
+                        l.getLightMemberCnt()
+                )).collect(Collectors.toList());
+    }
+
+    private List<String> saveLightImage(final List<String> imagePath, final Light light) {
+        final List<String> imgList = new ArrayList<>();
+        imagePath.stream()
+                .map(imgUrl -> LightImage.newInstance(imgUrl, light))
+                .forEach(img -> {
+                    lightImageRepository.save(img);
+                    imgList.add(img.getImgUrl());
+                });
+        return imgList;
+    }
+
     private void checkLightReport(final User user, final Light light) {
         final Optional<ReportLight> reportLight = reportLightRepository.findByUserIdAndLightId(user.getId(), light.getId());
-            if (reportLight.isPresent()){
+        if (reportLight.isPresent()) {
             throw new ConflictException("해당 번개를 이미 신고한 상태입니다.", ErrorCode.CONFLICT_EXCEPTION);
         }
     }

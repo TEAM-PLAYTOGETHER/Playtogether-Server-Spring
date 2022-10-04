@@ -30,6 +30,7 @@ public class ScrapService {
                 .orElseThrow(() -> new NotFoundException("존재하지 않는 번개 입니다.", ErrorCode.NOT_FOUND_EXCEPTION));
         checkLightScrap(user, light);
         scrapRepository.save(Scrap.of(lightId, userId));
+        light.updateScpCnt();
     }
 
     private void checkLightScrap(User user, Light light) {
