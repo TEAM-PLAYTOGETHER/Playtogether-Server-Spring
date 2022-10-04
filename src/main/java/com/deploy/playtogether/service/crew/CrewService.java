@@ -22,7 +22,7 @@ public class CrewService {
     private final CrewUserRepository crewUserRepository;
     private final UserRepository userRepository;
 
-    public CrewResponseDto createCrew(final Long userId, final CrewDto request) {
+    public void createCrew(final Long userId, final CrewDto request) {
         final User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저 입니다."));
         final String code = CreateRandomCode();
         final Crew crew = crewRepository.save(Crew.newInstance(
@@ -32,13 +32,6 @@ public class CrewService {
                 code
         ));
         crewUserRepository.save(CrewUser.newInstance(crew.getUser(), crew));
-        return CrewResponseDto.of(
-                crew.getId(),
-                crew.getName(),
-                crew.getDescription(),
-                crew.getCode(),
-                crew.getUser().getId()
-        );
     }
     private String CreateRandomCode() {
         final int leftLimit = 65; // 'A'
