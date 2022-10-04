@@ -18,7 +18,6 @@ import com.deploy.playtogether.domain.user.UserRepository;
 import com.deploy.playtogether.service.light.dto.request.LightDto;
 import com.deploy.playtogether.service.light.dto.request.ReportLightDto;
 import com.deploy.playtogether.service.light.dto.response.HotLightResponse;
-import com.deploy.playtogether.service.light.dto.response.LightResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

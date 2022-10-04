@@ -4,7 +4,6 @@ import com.deploy.playtogether.common.dto.ApiResponse;
 import com.deploy.playtogether.common.exception.SuccessCode;
 import com.deploy.playtogether.controller.crew.dto.request.CrewRequestDto;
 import com.deploy.playtogether.service.crew.CrewService;
-import com.deploy.playtogether.service.crew.dto.response.CrewResponseDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;

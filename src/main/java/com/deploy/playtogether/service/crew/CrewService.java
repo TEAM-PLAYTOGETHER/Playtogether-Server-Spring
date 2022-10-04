@@ -8,7 +8,6 @@ import com.deploy.playtogether.domain.crewUser.CrewUserRepository;
 import com.deploy.playtogether.domain.user.User;
 import com.deploy.playtogether.domain.user.UserRepository;
 import com.deploy.playtogether.service.crew.dto.request.CrewDto;
-import com.deploy.playtogether.service.crew.dto.response.CrewResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
