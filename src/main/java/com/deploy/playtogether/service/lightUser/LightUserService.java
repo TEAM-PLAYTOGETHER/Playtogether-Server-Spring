@@ -28,6 +28,7 @@ public class LightUserService {
         final Light light = lightRepository.findById(lightId).orElseThrow(() -> new NotFoundException("존재하지 않는 번개입니다."));
         checkLightUser(lightId, userId);
         lightUserRepository.save(LightUser.newInstance(user, light));
+        light.updateMemberCnt();
     }
 
     private void checkLightUser(Long lightId, Long userId) {

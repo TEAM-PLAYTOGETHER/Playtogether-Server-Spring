@@ -104,5 +104,10 @@ public class Light extends AuditingTimeEntity {
         return new Light(title, place, peopleCnt,  description, date, time, 0, 0, category, user, crew);
     }
 
+    public void updateScpCnt(){
+        this.scpCnt += 1;
+    }
+    public void updateMemberCnt(){
+        this.lightMemberCnt += 1;
     }
 }
