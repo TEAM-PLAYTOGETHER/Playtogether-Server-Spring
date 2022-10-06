@@ -17,7 +17,7 @@ import com.deploy.playtogether.domain.user.User;
 import com.deploy.playtogether.domain.user.UserRepository;
 import com.deploy.playtogether.service.light.dto.request.LightDto;
 import com.deploy.playtogether.service.light.dto.request.ReportLightDto;
-import com.deploy.playtogether.service.light.dto.response.HotLightResponse;
+import com.deploy.playtogether.service.light.dto.response.LightResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.deploy.playtogether.common.exception.ErrorCode.NOT_FOUND_EXCEPTION;
+import static com.deploy.playtogether.common.exception.ErrorCode.NOT_FOUND_USER_EXCEPTION;
 
 @RequiredArgsConstructor
 @Service
@@ -41,8 +44,10 @@ public class LightService {
 
     @Transactional
     public void createLight(final Long userId, final Long crewId, final LightDto request, final List<String> imagePath) {
-        final User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다."));
-        final Crew crew = crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다."));
+        final User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다."
+                , NOT_FOUND_USER_EXCEPTION));
+        final Crew crew = crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다."
+                , NOT_FOUND_EXCEPTION));
         final Light light = lightRepository.save(Light.newInstance(
                 request.getTitle(),
                 request.getPlace(),
@@ -60,9 +65,9 @@ public class LightService {
 
     @Transactional
     public void reportLight(final Long crewId, final Long lightId, final Long userId, final ReportLightDto request) {
-        crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다.", ErrorCode.NOT_FOUND_EXCEPTION));
-        final User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다.", ErrorCode.NOT_FOUND_USER_EXCEPTION));
-        final Light light = lightRepository.findById(lightId).orElseThrow(() -> new NotFoundException("존재하지 않는 번개입니다.", ErrorCode.NOT_FOUND_EXCEPTION));
+        crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다.", NOT_FOUND_EXCEPTION));
+        final User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다.", NOT_FOUND_USER_EXCEPTION));
+        final Light light = lightRepository.findById(lightId).orElseThrow(() -> new NotFoundException("존재하지 않는 번개입니다.", NOT_FOUND_EXCEPTION));
 
         checkLightReport(user, light);
 
@@ -76,13 +81,28 @@ public class LightService {
     }
 
     @Transactional
-    public List<HotLightResponse> getHotLight(Long crewId) {
-        crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다."));
+    public List<LightResponse> getHotLight(Long crewId) {
+        crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다."
+                , NOT_FOUND_EXCEPTION));
         Pageable page = PageRequest.of(0, 5);
-        List<Light> lights = lightRepository.findAllByOrderByScpCntDesc(page);
+        List<Light> hotLights = lightRepository.findAllByOrderByScpCntDesc(page);
 
-        return lights.stream()
-                .map(l -> HotLightResponse.of(
+        return hotLights.stream()
+                .map(l -> LightResponse.of(
+                        l.getId(), l.getCategory(), l.getTitle(), l.getDate(), l.getTime(),
+                        l.getPlace(), l.getPeopleCnt(), l.getScpCnt(),
+                        l.getLightMemberCnt()
+                )).collect(Collectors.toList());
+    }
+
+    public List<LightResponse> getNewLight(Long crewId) {
+        crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다."
+                , NOT_FOUND_EXCEPTION));
+        Pageable page = PageRequest.of(0, 5);
+        List<Light> newLights = lightRepository.findAllByOrderByCreatedAtDesc(page);
+
+        return newLights.stream()
+                .map(l -> LightResponse.of(
                         l.getId(), l.getCategory(), l.getTitle(), l.getDate(), l.getTime(),
                         l.getPlace(), l.getPeopleCnt(), l.getScpCnt(),
                         l.getLightMemberCnt()

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface LightRepository extends JpaRepository<Light, Long>{
     List<Light> findAllByOrderByScpCntDesc(Pageable pageable);
+
+    List<Light> findAllByOrderByCreatedAtDesc(Pageable page);
 }
