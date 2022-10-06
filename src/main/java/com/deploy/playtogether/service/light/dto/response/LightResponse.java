@@ -12,7 +12,7 @@ import java.time.LocalTime;
 @ToString
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class HotLightResponse{
+public class LightResponse {
 
     private Long lightId;
     private LightCategory category;
@@ -24,7 +24,7 @@ public class HotLightResponse{
     private int ScpCnt;
     private int LightMemberCount;
 
-    private HotLightResponse(final Long lightId, final LightCategory category, final String title, final LocalDate date, final LocalTime time, final String place, final int peopleCount, final int scpCnt, final int lightMemberCount) {
+    private LightResponse(final Long lightId, final LightCategory category, final String title, final LocalDate date, final LocalTime time, final String place, final int peopleCount, final int scpCnt, final int lightMemberCount) {
         this.lightId = lightId;
         this.category = category;
         this.title = title;
@@ -33,10 +33,10 @@ public class HotLightResponse{
         this.place = place;
         this.peopleCount = peopleCount;
         this.ScpCnt = scpCnt;
-        LightMemberCount = lightMemberCount;
+        this.LightMemberCount = lightMemberCount;
     }
-    public static HotLightResponse of(final Long lightId, final LightCategory category, final String title, final LocalDate date, final LocalTime time, final String place, final int peopleCount, final int scpCnt, final int lightMemberCount){
-        HotLightResponse response = new HotLightResponse(
+    public static LightResponse of(final Long lightId, final LightCategory category, final String title, final LocalDate date, final LocalTime time, final String place, final int peopleCount, final int scpCnt, final int lightMemberCount){
+        LightResponse response = new LightResponse(
                 lightId,
                 category,
                 title,

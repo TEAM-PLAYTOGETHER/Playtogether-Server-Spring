@@ -6,7 +6,7 @@ import com.deploy.playtogether.controller.light.dto.request.LightRequestDto;
 import com.deploy.playtogether.controller.light.dto.request.ReportLightRequestDto;
 import com.deploy.playtogether.service.light.LightService;
 import com.deploy.playtogether.service.light.S3Service;
-import com.deploy.playtogether.service.light.dto.response.HotLightResponse;
+import com.deploy.playtogether.service.light.dto.response.LightResponse;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,8 +43,14 @@ public class LightController {
 
     @ApiOperation("인기 번개 조회 API")
     @GetMapping("/light/{crewId}/hot")
-    public ApiResponse<List<HotLightResponse>> getHotLight(@PathVariable final Long crewId){
+    public ApiResponse<List<LightResponse>> getHotLight(@PathVariable final Long crewId){
         return ApiResponse.success(SuccessCode.HOT_LIGHT_SUCCESS, lightService.getHotLight(crewId));
+    }
+
+    @ApiOperation("최신 번개 조회 API")
+    @GetMapping("/light/{crewId}/new")
+    public ApiResponse<List<LightResponse>> getNewLight(@PathVariable final Long crewId){
+        return ApiResponse.success(SuccessCode.NEW_LIGHT_SUCCESS, lightService.getNewLight(crewId));
     }
 }
 
