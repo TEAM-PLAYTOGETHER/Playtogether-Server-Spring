@@ -95,6 +95,7 @@ public class LightService {
                 )).collect(Collectors.toList());
     }
 
+    @Transactional
     public List<LightResponse> getNewLight(Long crewId) {
         crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다."
                 , NOT_FOUND_EXCEPTION));
@@ -109,6 +110,7 @@ public class LightService {
                 )).collect(Collectors.toList());
     }
 
+    @Transactional
     private List<String> saveLightImage(final List<String> imagePath, final Light light) {
         final List<String> imgList = new ArrayList<>();
         imagePath.stream()

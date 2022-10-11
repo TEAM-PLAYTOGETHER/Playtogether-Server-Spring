@@ -10,6 +10,7 @@ import com.deploy.playtogether.domain.user.UserRepository;
 import com.deploy.playtogether.service.crew.dto.request.CrewDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Random;
 
@@ -21,6 +22,7 @@ public class CrewService {
     private final CrewUserRepository crewUserRepository;
     private final UserRepository userRepository;
 
+    @Transactional
     public void createCrew(final Long userId, final CrewDto request) {
         final User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저 입니다."));
         final String code = CreateRandomCode();
