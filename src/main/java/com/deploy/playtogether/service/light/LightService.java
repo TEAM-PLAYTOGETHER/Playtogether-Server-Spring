@@ -18,7 +18,9 @@ import com.deploy.playtogether.domain.user.UserRepository;
 import com.deploy.playtogether.service.light.dto.request.LightDto;
 import com.deploy.playtogether.service.light.dto.request.ReportLightDto;
 import com.deploy.playtogether.service.light.dto.response.LightResponse;
+import com.deploy.playtogether.service.light.dto.response.LightResponseUsingCursorResponse;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -81,28 +83,37 @@ public class LightService {
     }
 
     @Transactional
-    public List<LightResponse> getHotLight(Long crewId) {
+    public List<LightResponse> getHotLight(final Long crewId) {
         crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다."
                 , NOT_FOUND_EXCEPTION));
-        Pageable page = PageRequest.of(0, 5);
-        List<Light> hotLights = lightRepository.findAllByOrderByScpCntDesc(page);
+        final Pageable page = PageRequest.of(0, 5);
+        final List<Light> hotLights = lightRepository.findAllByOrderByScpCntDesc(page);
 
         return getLightResponseList(hotLights);
     }
+    @Transactional
+    public LightResponseUsingCursorResponse getOpenLight(final Long crewId, final Long userId, final int size, final Long lastLightId) {
+        userRepository.findById(userId).orElseThrow(() -> new NotFoundException("존재하지 않는 유저입니다."
+                , NOT_FOUND_USER_EXCEPTION));
+        crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다."
+                , NOT_FOUND_EXCEPTION));
+        final List<Light> openLights = lightRepository.findAllByUserIdUsingCursor(userId, size, lastLightId);
+        final List<LightResponse> lightResponseList = getLightResponseList(openLights);
+        return getLightResponseUsingCursorResponse(size, lightResponseList);
     }
 
     @Transactional
-    public List<LightResponse> getNewLight(Long crewId) {
+    public List<LightResponse> getNewLight(final Long crewId) {
         crewRepository.findById(crewId).orElseThrow(() -> new NotFoundException("존재하지 않는 동아리 입니다."
                 , NOT_FOUND_EXCEPTION));
-        Pageable page = PageRequest.of(0, 5);
-        List<Light> newLights = lightRepository.findAllByOrderByCreatedAtDesc(page);
+        final Pageable page = PageRequest.of(0, 5);
+        final List<Light> newLights = lightRepository.findAllByOrderByCreatedAtDesc(page);
 
         return getLightResponseList(newLights);
     }
 
     @Transactional
-    private List<String> saveLightImage(final List<String> imagePath, final Light light) {
+    public List<String> saveLightImage(final List<String> imagePath, final Light light) {
         final List<String> imgList = new ArrayList<>();
         imagePath.stream()
                 .map(imgUrl -> LightImage.newInstance(imgUrl, light))
@@ -119,6 +130,15 @@ public class LightService {
             throw new ConflictException("해당 번개를 이미 신고한 상태입니다.", ErrorCode.CONFLICT_EXCEPTION);
         }
     }
+
+    @NotNull
+    private LightResponseUsingCursorResponse getLightResponseUsingCursorResponse(int size, List<LightResponse> lightResponseList) {
+        if (size > lightResponseList.size()){
+            return LightResponseUsingCursorResponse.of(lightResponseList, -1L);
+        }
+        return LightResponseUsingCursorResponse.of(lightResponseList, lightResponseList.get(size - 1).getLightId());
+    }
+
     @NotNull
     private List<LightResponse> getLightResponseList(List<Light> lights) {
         return lights.stream()
