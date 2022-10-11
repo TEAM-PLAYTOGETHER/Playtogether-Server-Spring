@@ -87,12 +87,8 @@ public class LightService {
         Pageable page = PageRequest.of(0, 5);
         List<Light> hotLights = lightRepository.findAllByOrderByScpCntDesc(page);
 
-        return hotLights.stream()
-                .map(l -> LightResponse.of(
-                        l.getId(), l.getCategory(), l.getTitle(), l.getDate(), l.getTime(),
-                        l.getPlace(), l.getPeopleCnt(), l.getScpCnt(),
-                        l.getLightMemberCnt()
-                )).collect(Collectors.toList());
+        return getLightResponseList(hotLights);
+    }
     }
 
     @Transactional
@@ -102,12 +98,7 @@ public class LightService {
         Pageable page = PageRequest.of(0, 5);
         List<Light> newLights = lightRepository.findAllByOrderByCreatedAtDesc(page);
 
-        return newLights.stream()
-                .map(l -> LightResponse.of(
-                        l.getId(), l.getCategory(), l.getTitle(), l.getDate(), l.getTime(),
-                        l.getPlace(), l.getPeopleCnt(), l.getScpCnt(),
-                        l.getLightMemberCnt()
-                )).collect(Collectors.toList());
+        return getLightResponseList(newLights);
     }
 
     @Transactional
@@ -128,4 +119,13 @@ public class LightService {
             throw new ConflictException("해당 번개를 이미 신고한 상태입니다.", ErrorCode.CONFLICT_EXCEPTION);
         }
     }
+    @NotNull
+    private List<LightResponse> getLightResponseList(List<Light> lights) {
+        return lights.stream()
+                .map(l -> LightResponse.of(l.getId(), l.getCategory(), l.getTitle(), l.getDate(), l.getTime(),
+                        l.getPlace(), l.getPeopleCnt(), l.getScpCnt(),
+                        l.getLightMemberCnt()
+                )).collect(Collectors.toList());
+    }
+
 }
