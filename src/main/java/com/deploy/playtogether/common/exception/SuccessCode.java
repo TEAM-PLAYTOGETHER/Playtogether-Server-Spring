@@ -21,6 +21,7 @@ public enum SuccessCode {
     REPORT_LIGHT_SUCCESS(SUCCESS, "번개 신고가 완료되었습니다."),
     HOT_LIGHT_SUCCESS(SUCCESS, "인기 번개 조회 성공"),
     NEW_LIGHT_SUCCESS(SUCCESS, "최신 번개 조회 성공"),
+    OPEN_LIGHT_SUCCESS(SUCCESS, "내가 만든 번개 조회 성공"),
     ;
 
     private final StatusCode statusCode;
