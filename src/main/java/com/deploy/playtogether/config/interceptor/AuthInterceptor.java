@@ -15,8 +15,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     private final LoginCheckHandler loginCheckHandler;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
-        Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
