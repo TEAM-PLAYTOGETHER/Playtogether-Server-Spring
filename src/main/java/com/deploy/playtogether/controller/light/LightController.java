@@ -2,6 +2,8 @@ package com.deploy.playtogether.controller.light;
 
 import com.deploy.playtogether.common.dto.ApiResponse;
 import com.deploy.playtogether.common.exception.SuccessCode;
+import com.deploy.playtogether.config.interceptor.Auth;
+import com.deploy.playtogether.config.resolver.UserId;
 import com.deploy.playtogether.controller.light.dto.request.LightRequestDto;
 import com.deploy.playtogether.controller.light.dto.request.LightScrollRequest;
 import com.deploy.playtogether.controller.light.dto.request.ReportLightRequestDto;
@@ -28,8 +30,9 @@ public class LightController {
     private final S3Service s3Service;
 
     @ApiOperation("[인증] 번개 생성 API")
-    @PostMapping(value = "/light/add/{crewId}/{userId}", consumes = "multipart/form-data")
-    public ApiResponse createLight(@PathVariable final Long userId, @PathVariable final Long crewId,
+    @Auth
+    @PostMapping(value = "/light/add/{crewId}", consumes = "multipart/form-data")
+    public ApiResponse createLight(@UserId Long userId, @PathVariable final Long crewId,
                                    @ModelAttribute @Valid final LightRequestDto request) {
         final List<String> imgPaths = s3Service.upload(request.getImages());
         lightService.createLight(userId, crewId, request.toServiceDto(), imgPaths);
@@ -37,8 +40,9 @@ public class LightController {
     }
 
     @ApiOperation("[인증] 번개 신고 API")
-    @PostMapping("/light/report/{crewId}/{lightId}/{userId}")
-    public ApiResponse reportLight(@PathVariable final Long crewId, @PathVariable final Long lightId, @PathVariable final Long userId, @RequestBody @Valid final ReportLightRequestDto request) {
+    @Auth
+    @PostMapping("/light/report/{crewId}/{lightId}")
+    public ApiResponse reportLight(@PathVariable final Long crewId, @PathVariable final Long lightId, @UserId Long userId, @RequestBody @Valid final ReportLightRequestDto request) {
         lightService.reportLight(crewId, lightId, userId, request.toServiceDto());
         return ApiResponse.success(SuccessCode.REPORT_LIGHT_SUCCESS);
     }
@@ -56,9 +60,10 @@ public class LightController {
     }
 
     @ApiOperation("내가 만든 번개 리스트 조회 API")
-    @GetMapping("/light/{crewId}/{userId}/open")
-    public ApiResponse<LightResponseUsingCursorResponse> getOpenLight(@PathVariable final Long crewId, @PathVariable final Long userId, @Valid final LightScrollRequest request) {
-        return ApiResponse.success(SuccessCode.OPEN_LIGHT_SUCCESS, lightService.getOpenLight(crewId, userId, request.getSize(), request.getLastLightId())); //TODO size + lastLightId DTO로 묶기
+    @Auth
+    @GetMapping("/light/{crewId}/open")
+    public ApiResponse<LightResponseUsingCursorResponse> getOpenLight(@PathVariable final Long crewId, @UserId Long userId, @Valid final LightScrollRequest request) {
+        return ApiResponse.success(SuccessCode.OPEN_LIGHT_SUCCESS, lightService.getOpenLight(crewId, userId, request.getSize(), request.getLastLightId()));
     }
 }
 
