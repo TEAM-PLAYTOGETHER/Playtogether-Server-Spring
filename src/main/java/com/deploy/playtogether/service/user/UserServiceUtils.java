@@ -34,4 +34,12 @@ public class UserServiceUtils {
         }
         return user;
     }
+    @NotNull
+    public static User findUserById(UserRepository userRepository, Long userId) {
+        User user = userRepository.findUserById(userId);
+        if (user == null) {
+            throw new NotFoundException(String.format("존재하지 않는 유저 (%s) 입니다", userId), NOT_FOUND_USER_EXCEPTION);
+        }
+        return user;
+    }
 }
