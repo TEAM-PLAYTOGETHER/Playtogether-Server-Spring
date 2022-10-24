@@ -47,6 +47,8 @@ dependencies {
 	implementation 'com.querydsl:querydsl-jpa'
 	implementation 'com.querydsl:querydsl-apt'
 
+	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+
 	//JWT
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
 	implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
@@ -60,7 +62,6 @@ dependencies {
 	//local db 설정
 	runtimeOnly 'mysql:mysql-connector-java'
 }
-implementation 'org.mapstruct:mapstruct:1.4.2.Final'
 
 // 빌드 시 jar파일 빌드하는 방법.
 jar {
