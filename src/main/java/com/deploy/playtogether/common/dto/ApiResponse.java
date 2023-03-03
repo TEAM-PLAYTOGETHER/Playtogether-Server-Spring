@@ -1,8 +1,8 @@
 package com.deploy.playtogether.common.dto;
 
-import com.deploy.playtogether.common.exception.ErrorCode;
-import com.deploy.playtogether.common.exception.StatusCode;
-import com.deploy.playtogether.common.exception.SuccessCode;
+import com.deploy.playtogether.exception.ErrorCode;
+import com.deploy.playtogether.exception.StatusCode;
+import com.deploy.playtogether.exception.SuccessCode;
 
 import lombok.ToString;
 import lombok.Getter;

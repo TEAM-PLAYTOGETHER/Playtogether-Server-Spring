@@ -1,6 +1,6 @@
 package com.deploy.playtogether.external.client.apple.dto.response;
 
-import com.deploy.playtogether.common.exception.model.ValidationException;
+import com.deploy.playtogether.exception.model.ValidationException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

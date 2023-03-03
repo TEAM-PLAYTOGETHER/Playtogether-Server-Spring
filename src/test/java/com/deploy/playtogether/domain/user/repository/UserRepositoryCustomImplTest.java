@@ -1,8 +1,9 @@
 package com.deploy.playtogether.domain.user.repository;
 
-import com.deploy.playtogether.domain.user.User;
-import com.deploy.playtogether.domain.user.UserRepository;
-import com.deploy.playtogether.domain.user.UserSocialType;
+import com.deploy.playtogether.auth.domain.User;
+import com.deploy.playtogether.auth.infrastructure.UserRepository;
+import com.deploy.playtogether.auth.domain.UserSocialType;
+import com.deploy.playtogether.auth.infrastructure.UserRepositoryCustomImpl;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
