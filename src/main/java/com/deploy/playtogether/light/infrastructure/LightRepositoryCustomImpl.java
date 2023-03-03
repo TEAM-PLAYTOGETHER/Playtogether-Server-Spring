@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.Objects;
 
-import static com.deploy.playtogether.domain.light.QLight.light;
+import static com.deploy.playtogether.light.domain.QLight.light;
+
 
 @RequiredArgsConstructor
 public class LightRepositoryCustomImpl implements LightRepositoryCustom{

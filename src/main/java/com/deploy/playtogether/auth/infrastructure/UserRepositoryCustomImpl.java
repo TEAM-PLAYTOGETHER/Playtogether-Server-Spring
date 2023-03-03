@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.LockModeType;
 
-import static com.deploy.playtogether.domain.user.QUser.user;
+import static com.deploy.playtogether.auth.domain.QUser.user;
 
 
 @RequiredArgsConstructor
