@@ -1,8 +1,6 @@
 package com.deploy.playtogether.external.client.apple;
 
-import com.deploy.playtogether.common.exception.model.ValidationException;
-import com.deploy.playtogether.external.client.apple.AppleAuthApiClient;
-import com.deploy.playtogether.external.client.apple.AppleTokenDecoder;
+import com.deploy.playtogether.exception.model.ValidationException;
 import com.deploy.playtogether.external.client.apple.dto.response.ApplePublicKeyResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -25,7 +23,7 @@ import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
 import java.util.Map;
 
-import static com.deploy.playtogether.common.exception.ErrorCode.VALIDATION_AUTH_TOKEN_EXCEPTION;
+import static com.deploy.playtogether.exception.ErrorCode.VALIDATION_AUTH_TOKEN_EXCEPTION;
 
 @RequiredArgsConstructor
 @Component

@@ -1,8 +1,8 @@
 package com.deploy.playtogether.config;
 
-import com.deploy.playtogether.common.util.EnumMapper;
-import com.deploy.playtogether.domain.light.LightCategory;
-import com.deploy.playtogether.domain.user.UserSocialType;
+import com.deploy.playtogether.util.EnumMapper;
+import com.deploy.playtogether.light.domain.LightCategory;
+import com.deploy.playtogether.auth.domain.UserSocialType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
