@@ -1,11 +1,12 @@
 package com.deploy.playtogether.service.user;
 
-import com.deploy.playtogether.domain.user.User;
-import com.deploy.playtogether.domain.user.UserRepository;
-import com.deploy.playtogether.domain.user.UserSocialType;
-import com.deploy.playtogether.service.auth.AuthService;
-import com.deploy.playtogether.service.auth.dto.request.LoginDto;
-import com.deploy.playtogether.service.user.dto.request.CreateUserDto;
+import com.deploy.playtogether.auth.domain.User;
+import com.deploy.playtogether.auth.infrastructure.UserRepository;
+import com.deploy.playtogether.auth.domain.UserSocialType;
+import com.deploy.playtogether.auth.service.UserService;
+import com.deploy.playtogether.auth.service.AuthService;
+import com.deploy.playtogether.auth.service.request.LoginDto;
+import com.deploy.playtogether.auth.service.request.CreateUserDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
